@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: User
+
+# Model Form Field configuration
+form: $/site/user/models/user/fields.yaml
+
+# Model Class name
+modelClass: Site\User\Models\User
+
+# Default redirect location
+defaultRedirect: site/user/users
+
+# Create page
+create:
+    title: Create User
+    redirect: site/user/users/update/:id
+    redirectClose: site/user/users
+
+# Update page
+update:
+    title: Edit User
+    redirect: site/user/users
+    redirectClose: site/user/users
+
+# Preview page
+preview:
+    title: Preview User

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Group
+
+# Model Form Field configuration
+form: $/site/user/models/group/fields.yaml
+
+# Model Class name
+modelClass: Site\User\Models\Group
+
+# Default redirect location
+defaultRedirect: site/user/groups
+
+# Create page
+create:
+    title: Create Group
+    redirect: site/user/groups/update/:id
+    redirectClose: site/user/groups
+
+# Update page
+update:
+    title: Edit Group
+    redirect: site/user/groups
+    redirectClose: site/user/groups
+
+# Preview page
+preview:
+    title: Preview Group

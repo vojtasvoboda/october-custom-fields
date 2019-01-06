@@ -1,0 +1,23 @@
+plugin:
+    name: 'Users'
+    description: 'Users with custom fields'
+    author: 'Vojta Svoboda'
+    icon: icon-user
+navigation:
+    user:
+        label: 'Users'
+        url: site/user/users
+        icon: icon-user
+        sideMenu:
+            users:
+                label: 'Users'
+                url: site/user/users
+                icon: icon-user
+            groups:
+                label: 'Groups'
+                url: site/user/groups
+                icon: icon-users
+            fields:
+                label: 'Fields'
+                url: site/user/fields
+                icon: icon-cog
