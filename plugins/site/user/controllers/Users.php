@@ -3,7 +3,9 @@
 use Backend\Widgets\Form;
 use BackendMenu;
 use Backend\Classes\Controller;
+use Input;
 use Site\User\Models\Field;
+use Site\User\Models\User;
 
 /**
  * Users Back-end Controller
@@ -40,7 +42,7 @@ class Users extends Controller
 
         // add all possible custom fields
         Field::isEnabled()->each(function ($field) use ($form) {
-            $key = sprintf('fields[%s]', $field->ident);
+            $key = sprintf('custom_fields[%s]', $field->ident);
             $form->addTabFields([
                 $key => [
                     'tab' => 'Custom fields',
@@ -48,5 +50,18 @@ class Users extends Controller
                 ],
             ]);
         });
+    }
+
+    /**
+     * Manually set custom fields array.
+     *
+     * @param User $model
+     */
+    public function formBeforeSave($model)
+    {
+        $form = Input::get('User');
+        if (is_array($form) && !empty($form['custom_fields'])) {
+            $model->fields_array = $form['custom_fields'];
+        }
     }
 }

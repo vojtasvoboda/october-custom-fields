@@ -82,9 +82,9 @@ class User extends Model
     }
 
     /**
-     * Before save user model.
+     * Before create/update user model, save/update all custom fields.
      */
-    public function afterCreate()
+    public function afterSave()
     {
         // custom form fields to save
         $userFieldsArray = $this->getOriginalPurgeValue('fields_array');
@@ -95,6 +95,21 @@ class User extends Model
 
         // save user fields
         $userFields->each(function ($value, $key) use ($allowedFields) {
+            // try to find existing record
+            $field = $this->fields()->where('ident', $key)->first();
+
+            // if found, update
+            if ($field !== null) {
+                $field->pivot->value = $value;
+                $field->pivot->save();
+                return;
+            }
+
+            // don't save empty values
+            if (empty($value)) {
+                return;
+            }
+
             // find original field by key
             $field = $allowedFields->where('ident', $key)->first();
 
@@ -130,7 +145,7 @@ class User extends Model
      *
      * @return array
      */
-    public function getFieldsAttribute()
+    public function getCustomFieldsAttribute()
     {
         return $this->fields()->get()->lists('pivot.value', 'ident');
     }
