@@ -1,0 +1,5 @@
+title: Fields
+modelClass: Site\User\Models\Field
+nameFrom: name
+toolbar:
+    buttons: reorder_toolbar
