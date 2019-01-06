@@ -19,10 +19,20 @@ class CreateFieldsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('site_user_users_fields', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->integer('user_id')->unsigned();
+            $table->integer('field_id')->unsigned();
+            $table->string('value')->nullable();
+            $table->primary(['user_id', 'field_id'], 'user_fields');
+            $table->timestamps();
+        });
     }
 
     public function down()
     {
         Schema::dropIfExists('site_user_fields');
+        Schema::dropIfExists('site_user_users_fields');
     }
 }

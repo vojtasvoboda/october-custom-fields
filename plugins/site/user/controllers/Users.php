@@ -38,12 +38,14 @@ class Users extends Controller
         /** @var Form $form */
         $form = $this->formGetWidget();
 
-        Field::isEnabled()->get()->each(function ($field) use ($form) {
+        // add all possible custom fields
+        Field::isEnabled()->each(function ($field) use ($form) {
+            $key = sprintf('fields[%s]', $field->ident);
             $form->addTabFields([
-                $field->ident => [
-                    'tab' => 'Custom Fields',
+                $key => [
+                    'tab' => 'Custom fields',
                     'label' => $field->name,
-                ]
+                ],
             ]);
         });
     }

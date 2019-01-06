@@ -44,6 +44,13 @@ class User extends Model
             'scope' => 'isEnabled',
             'timestamps' => true,
         ],
+        'fields' => [
+            Field::class,
+            'table' => 'site_user_users_fields',
+            'scope' => 'isEnabled',
+            'timestamps' => true,
+            'pivot' => ['value'],
+        ],
     ];
 
     /**
@@ -75,5 +82,15 @@ class User extends Model
         } while ($exists !== null && ++$count < 1000);
 
         return $count < 1000 ? $ident : null;
+    }
+
+    /**
+     * Load custom fields as array.
+     *
+     * @return array
+     */
+    public function getFieldsAttribute()
+    {
+        return $this->fields()->get()->lists('pivot.value', 'ident');
     }
 }
