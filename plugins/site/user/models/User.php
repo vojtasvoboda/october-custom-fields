@@ -36,10 +36,18 @@ class User extends Model
     /** @var array List of attribute names which should be hashed using the Bcrypt hashing algorithm. */
     protected $hashable = ['password'];
 
+    /**
+     * Before validate user model.
+     */
     public function beforeValidate()
     {
+        // before create
         if ($this->id === null) {
             $this->ident = $this->getUniqueIdent();
+        }
+
+        // create password when not set
+        if (empty($this->password)) {
             $this->password = Str::random(6);
         }
     }

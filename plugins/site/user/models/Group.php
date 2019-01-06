@@ -30,10 +30,10 @@ class Group extends Model
     /**
      * Scope for fetching only enabled groups.
      *
-     * @param $query
+     * @param Builder $query
      * @return Builder
      */
-    public function scopeIsEnabled($query)
+    public function scopeIsEnabled(Builder $query)
     {
         return $query->where('enabled', true);
     }

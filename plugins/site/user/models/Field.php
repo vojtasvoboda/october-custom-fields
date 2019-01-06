@@ -32,12 +32,12 @@ class Field extends Model
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
-     * Scope for fetching only enabled groups.
+     * Scope for fetching only enabled fields.
      *
-     * @param $query
+     * @param Builder $query
      * @return Builder
      */
-    public function scopeIsEnabled($query)
+    public function scopeIsEnabled(Builder $query)
     {
         return $query->where('enabled', true);
     }
