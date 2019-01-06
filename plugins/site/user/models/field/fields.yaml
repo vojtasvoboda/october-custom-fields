@@ -3,6 +3,16 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    name:
+        label: Name
+    ident:
+        label: Ident
+        preset:
+            field: name
+            type: slug
+    required:
+        label: Required
+        type: checkbox
+    enabled:
+        label: Enabled
+        type: checkbox

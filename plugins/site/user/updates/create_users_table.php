@@ -11,7 +11,14 @@ class CreateUsersTable extends Migration
         Schema::create('site_user_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('name');
+            $table->string('ident')->unique();
+            $table->string('password');
+            $table->string('surname')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

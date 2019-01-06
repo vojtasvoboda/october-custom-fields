@@ -11,7 +11,11 @@ class CreateGroupsTable extends Migration
         Schema::create('site_user_groups', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('name');
+            $table->string('ident')->unique();
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
