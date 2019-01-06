@@ -1,0 +1,24 @@
+<h1>Registration form</h1>
+
+{{ form_open({ request: 'onRegister' }) }}
+
+<label>Name</label>
+<input name="name" type="text" value="{{ form_value('name') }}"><br>
+
+<label>Surname</label>
+<input name="surname" type="text" value="{{ form_value('surname') }}"><br>
+
+<label>Email</label>
+<input name="email" type="email" value="{{ form_value('email') }}"><br>
+
+<label>Phone</label>
+<input name="phone" type="text" value="{{ form_value('phone') }}"><br>
+
+{% for field in __SELF__.fields %}
+    <label>{{ field.name }}</label>
+    <input name="fields_array[{{ field.ident }}]" type="text" value="{{ form_value('fields_array[' ~ field.ident ~ ']') }}" ><br>
+{% endfor %}
+
+<button type="submit">Register</button><br>
+
+{{ form_close() }}

@@ -2,6 +2,7 @@
 
 use Model;
 use October\Rain\Database\Traits\Hashable as HashableTrait;
+use October\Rain\Database\Traits\Purgeable as PurgeableTrait;
 use October\Rain\Database\Traits\SoftDelete as SoftDeletingTrait;
 use October\Rain\Database\Traits\Validation as ValidationTrait;
 use October\Rain\Support\Str;
@@ -16,6 +17,8 @@ class User extends Model
     use HashableTrait;
 
     use SoftDeletingTrait;
+
+    use PurgeableTrait;
 
     use ValidationTrait;
 
@@ -33,8 +36,17 @@ class User extends Model
     /** @var array $dates Fields whose are converted to Carbon object. */
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
 
+    /** @var array $fillable Fillable fields. */
+    public $fillable = ['name', 'ident', 'password', 'surname', 'email', 'phone', 'fields_array'];
+
     /** @var array List of attribute names which should be hashed using the Bcrypt hashing algorithm. */
     protected $hashable = ['password'];
+
+    /** @var array $jsonable Which fields are array, so we need to convert them to json. */
+    protected $jsonable = ['fields_array'];
+
+    /** @var array $purgeable Purge attributes from data set. */
+    protected $purgeable = ['fields_array'];
 
     /** @var array $belongsToMany Belongs to many relations. */
     public $belongsToMany = [
@@ -67,6 +79,35 @@ class User extends Model
         if (empty($this->password)) {
             $this->password = Str::random(6);
         }
+    }
+
+    /**
+     * Before save user model.
+     */
+    public function afterCreate()
+    {
+        // custom form fields to save
+        $userFieldsArray = $this->getOriginalPurgeValue('fields_array');
+        $userFields = collect(json_decode($userFieldsArray, true));
+
+        // load all original custom fields objects
+        $allowedFields = Field::isEnabled()->get();
+
+        // save user fields
+        $userFields->each(function ($value, $key) use ($allowedFields) {
+            // find original field by key
+            $field = $allowedFields->where('ident', $key)->first();
+
+            // skip non-valid fields
+            if ($field === null) {
+                return;
+            }
+
+            // save for the user
+            $this->fields()->add($field, [
+                'value' => $value,
+            ]);
+        });
     }
 
     /**

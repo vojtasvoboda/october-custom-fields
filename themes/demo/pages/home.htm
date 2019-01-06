@@ -1,6 +1,9 @@
 title = "Demo"
 url = "/"
 layout = "default"
+is_hidden = 0
+
+[form]
 ==
 <div class="jumbotron">
     <div class="container">
@@ -12,4 +15,6 @@ layout = "default"
     <p>
         Continue to the <a href="{{ url('backend') }}">backend</a>.
     </p>
+    
+    {% component 'form' %}
 </div>
