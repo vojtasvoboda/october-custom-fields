@@ -14,17 +14,17 @@ class Group extends Model
 
     use ValidationTrait;
 
-    /** @var string The database table used by the model. */
+    /** @var string $table The database table used by the model. */
     public $table = 'site_user_groups';
 
-    /** @var array Rules */
+    /** @var array $rules Model rules. */
     public $rules = [
         'name' => 'required|max:255',
         'ident' => 'required|unique:site_user_groups',
         'enabled' => 'boolean',
     ];
 
-    /** @var array $dates */
+    /** @var array $dates Fields whose are converted to Carbon object. */
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**

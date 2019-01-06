@@ -17,10 +17,19 @@ class CreateGroupsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('site_user_users_groups', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->integer('user_id')->unsigned();
+            $table->integer('group_id')->unsigned();
+            $table->primary(['user_id', 'group_id'], 'user_groups');
+            $table->timestamps();
+        });
     }
 
     public function down()
     {
         Schema::dropIfExists('site_user_groups');
+        Schema::dropIfExists('site_user_users_groups');
     }
 }

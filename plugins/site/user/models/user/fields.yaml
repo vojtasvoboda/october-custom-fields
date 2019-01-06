@@ -14,9 +14,19 @@ fields:
         required: true
         context:
             - update
-    email:
-        label: Email
-        span: left
-    phone:
-        label: Phone
-        span: right
+tabs:
+    fields:
+        email:
+            tab: Basic
+            label: Email
+            span: left
+        phone:
+            tab: Basic
+            label: Phone
+            span: right
+        groups:
+            tab: Basic
+            label: Groups
+            nameFrom: name
+            descriptionFrom: description
+            type: relation

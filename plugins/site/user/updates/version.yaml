@@ -1,5 +1,5 @@
 1.0.0:
   - First version of User
+  - create_users_table.php
   - create_groups_table.php
   - create_fields_table.php
-  - create_users_table.php

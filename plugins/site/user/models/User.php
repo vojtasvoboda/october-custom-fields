@@ -22,7 +22,7 @@ class User extends Model
     /** @var string The database table used by the model. */
     public $table = 'site_user_users';
 
-    /** @var array Rules */
+    /** @var array $rules Model rules. */
     public $rules = [
         'name' => 'required|max:255',
         'ident' => 'required|unique:site_user_users|size:' . self::IDENT_LENGTH,
@@ -30,11 +30,21 @@ class User extends Model
         'enabled' => 'boolean',
     ];
 
-    /** @var array $dates */
+    /** @var array $dates Fields whose are converted to Carbon object. */
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /** @var array List of attribute names which should be hashed using the Bcrypt hashing algorithm. */
     protected $hashable = ['password'];
+
+    /** @var array $belongsToMany Belongs to many relations. */
+    public $belongsToMany = [
+        'groups' => [
+            Group::class,
+            'table' => 'site_user_users_groups',
+            'scope' => 'isEnabled',
+            'timestamps' => true,
+        ],
+    ];
 
     /**
      * Before validate user model.
