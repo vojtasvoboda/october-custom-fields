@@ -12,6 +12,14 @@ fields:
         preset:
             field: name
             type: slug
+    type@create:
+        label: Type
+        type: dropdown
+        required: true
+    type@update:
+        label: Type
+        type: dropdown
+        disabled: true
     required:
         label: Required
         type: checkbox

@@ -24,6 +24,7 @@ class Field extends Model
     public $rules = [
         'name' => 'required|max:255',
         'ident' => 'required|unique:site_user_fields',
+        'type' => 'required',
         'required' => 'boolean',
         'enabled' => 'boolean',
     ];
@@ -40,5 +41,22 @@ class Field extends Model
     public function scopeIsEnabled(Builder $query)
     {
         return $query->where('enabled', true);
+    }
+
+    /**
+     * Returns array of available field types.
+     *
+     * @return array
+     */
+    public static function getTypeOptions()
+    {
+        return [
+            'text' => 'Text',
+            'number' => 'Number',
+            'checkbox' => 'Checkbox',
+            'switch' => 'Switch',
+            'textarea' => 'Textarea',
+            'password' => 'Password',
+        ];
     }
 }

@@ -13,6 +13,11 @@ columns:
         type: text
         searchable: true
         sortable: true
+    type:
+        label: Type
+        type: text
+        searchable: true
+        sortable: true
     sort_order:
         label: Sort order
         type: number

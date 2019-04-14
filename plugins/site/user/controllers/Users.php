@@ -47,6 +47,8 @@ class Users extends Controller
                 $key => [
                     'tab' => 'Custom fields',
                     'label' => $field->name,
+                    'type' => $field->type,
+                    'required' => $field->required,
                 ],
             ]);
         });

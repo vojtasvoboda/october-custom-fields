@@ -13,6 +13,7 @@ class CreateFieldsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('ident')->unique();
+            $table->string('type')->default('text');
             $table->boolean('required')->default(false);
             $table->boolean('enabled')->default(true);
             $table->boolean('sort_order')->nullable();
