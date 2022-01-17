@@ -28,7 +28,10 @@ class Themes extends Controller
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['cms.manage_themes'];
+    public $requiredPermissions = [
+        'cms.manage_themes',
+        'cms.manage_theme_options',
+    ];
 
     /**
      * Constructor.
@@ -46,8 +49,8 @@ class Themes extends Controller
         /*
          * Custom redirect for unauthorized request
          */
-        $this->bindEvent('page.beforeDisplay', function() {
-            if (!$this->user->hasAnyAccess($this->requiredPermissions)) {
+        $this->bindEvent('page.beforeDisplay', function () {
+            if (!$this->user->hasAccess('cms.manage_themes')) {
                 return Backend::redirect('cms/themeoptions/update');
             }
         });
@@ -262,6 +265,10 @@ class Themes extends Controller
 
     public function index_onLoadImportForm()
     {
+        if (\Cms\Helpers\Cms::safeModeEnabled()) {
+            throw new ApplicationException(trans('cms::lang.cms_object.safe_mode_enabled'));
+        }
+
         $theme = $this->findThemeObject();
         $this->vars['widget'] = $this->makeImportFormWidget($theme);
         $this->vars['themeDir'] = $theme->getDirName();
@@ -271,6 +278,10 @@ class Themes extends Controller
 
     public function index_onImport()
     {
+        if (\Cms\Helpers\Cms::safeModeEnabled()) {
+            throw new ApplicationException(trans('cms::lang.cms_object.safe_mode_enabled'));
+        }
+
         $theme = $this->findThemeObject();
         $widget = $this->makeImportFormWidget($theme);
 
